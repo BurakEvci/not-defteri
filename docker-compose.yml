@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: not-defteri-web
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=notes_db
+      - DB_USER=burak
+      - DB_PASS=1234
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: not-defteri-db
+    environment:
+      POSTGRES_DB: notes_db
+      POSTGRES_USER: burak
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
