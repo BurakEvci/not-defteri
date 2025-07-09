@@ -60,7 +60,7 @@ def delete_note(note_id):
 
 @app.route("/jenkins-test")
 def jenkins_test():
-    return "Merhaba Jenkins'e Hoşgeldin!"
+    return "Jenkins başarıyla güncellendi!"
 
 @app.route("/jenkins-test6")
 def jenkins_test6():
