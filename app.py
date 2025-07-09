@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template_string, render_template, redirect
 import psycopg2
 import os
 
@@ -22,31 +22,13 @@ cur.execute("""
 """)
 conn.commit()
 
-# Basit HTML arayüz
-HTML_TEMPLATE = """
-<!DOCTYPE html>
-<html>
-<head><title>Not Defteri</title></head>
-<body>
-    <h1>Notlar</h1>
-    <ul>
-        {% for note in notes %}
-            <li>{{ note[0] }} - {{ note[1] }}</li>
-        {% endfor %}
-    </ul>
-    <form action="/notes" method="post">
-        <input type="text" name="content" placeholder="Yeni not..." required>
-        <button type="submit">Ekle</button>
-    </form>
-</body>
-</html>
-"""
+
 
 @app.route("/")
 def index():
     cur.execute("SELECT id, content FROM notes ORDER BY id ASC;")
     notes = cur.fetchall()
-    return render_template_string(HTML_TEMPLATE, notes=notes)
+    return render_template("index.html", notes=notes)
 
 @app.route("/notes", methods=["GET"])
 def get_notes():
@@ -60,6 +42,14 @@ def add_note():
     note_id = cur.fetchone()[0]
     conn.commit()
     return jsonify({"id": note_id, "content": content}), 201
+
+@app.route("/add", methods=["POST"])
+def add_note_via_form():
+    content = request.form.get("content")
+    if content:
+        cur.execute("INSERT INTO notes (content) VALUES (%s);", (content,))
+        conn.commit()
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
