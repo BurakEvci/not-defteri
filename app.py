@@ -60,7 +60,7 @@ def delete_note(note_id):
 
 @app.route("/jenkins-test")
 def jenkins_test():
-    return "Merhaba Jenkins!"
+    return "Merhaba Jenkins'e Hoşgeldin!"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
