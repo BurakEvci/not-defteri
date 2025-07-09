@@ -51,5 +51,12 @@ def add_note_via_form():
         conn.commit()
     return redirect("/")
 
+@app.route("/delete/<int:note_id>", methods=["POST"])
+def delete_note(note_id):
+    cur.execute("DELETE FROM notes WHERE id = %s;", (note_id,))
+    conn.commit()
+    return redirect("/")
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
