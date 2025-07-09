@@ -62,7 +62,7 @@ def delete_note(note_id):
 def jenkins_test():
     return "Merhaba Jenkins'e Hoşgeldin!"
 
-@app.route("/jenkins-test5")
+@app.route("/jenkins-test6")
 def jenkins_test():
     return "Merhaba Jenkins'e Hoşgeldin Dostum!"
 
