@@ -25,6 +25,7 @@ conn.commit()
 
 
 @app.route("/")
+
 def index():
     cur.execute("SELECT id, content FROM notes ORDER BY id ASC;")
     notes = cur.fetchall()
@@ -57,6 +58,9 @@ def delete_note(note_id):
     conn.commit()
     return redirect("/")
 
+@app.route("/jenkins-test")
+def jenkins_test():
+    return "Merhaba Jenkins!"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
